@@ -22,4 +22,8 @@
     <string name="tipograficosdescripcion">Select the graphics representation.</string>
     <string name="numfragmentos">Fragments number</string>
     <string name="numfragmentosdescripcion">In how many bits an asteroid is fragmented.</string>
+    <string name="modomultijugador">Multiplayer mode</string>
+    <string name="multijugadoron">Enable multiplayer</string>
+    <string name="maxjugadores">Max. number of players</string>
+    <string name="tipoconexion">Connection settings</string>
 </resources>

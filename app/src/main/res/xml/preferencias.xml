@@ -19,4 +19,20 @@
         android:summary="@string/numfragmentosdescripcion"
         android:inputType="number"
         android:defaultValue="3"/>
+    <PreferenceCategory android:title="@string/modomultijugador">
+        <CheckBoxPreference
+            android:key="multijugador"
+            android:title="@string/multijugadoron"/>
+        <EditTextPreference
+            android:key="maxjugadores"
+            android:title="@string/maxjugadores"
+            android:inputType="number"
+            android:defaultValue="1"/>
+        <ListPreference
+            android:key="tipoconexion"
+            android:title="@string/tipoconexion"
+            android:entries="@array/tipoGraficos"
+            android:entryValues="@array/tiposGraficosValores"
+            android:defaultValue="1"/>
+    </PreferenceCategory>
 </PreferenceScreen>
