@@ -31,8 +31,8 @@
         <ListPreference
             android:key="tipoconexion"
             android:title="@string/tipoconexion"
-            android:entries="@array/tipoGraficos"
-            android:entryValues="@array/tiposGraficosValores"
+            android:entries="@array/tipoConexion"
+            android:entryValues="@array/tipoConexionValores"
             android:defaultValue="1"/>
     </PreferenceCategory>
 </PreferenceScreen>
