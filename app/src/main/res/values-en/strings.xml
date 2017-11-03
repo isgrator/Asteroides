@@ -11,4 +11,15 @@
     <string name="salir">Quit</string>
     <string name="acercadecontent">Asteroides is an applicacion made by Isabel María Gracián Torrent for the subject Android Programming Fundaments</string>
     <string name="buscar">Search</string>
+    <string name="vectorial">vectorial</string>
+    <string name="bitmap">bitmap</string>
+    <string name="tresde">3D</string>
+    <string name="uno">1</string>
+    <string name="dos">2</string>
+    <string name="playmusica">Play music</string>
+    <string name="playmusicadescripcion">Plays background music.</string>
+    <string name="tipograficos">Graphics</string>
+    <string name="tipograficosdescripcion">Select the graphics representation.</string>
+    <string name="numfragmentos">Fragments number</string>
+    <string name="numfragmentosdescripcion">In how many bits an asteroid is fragmented.</string>
 </resources>
