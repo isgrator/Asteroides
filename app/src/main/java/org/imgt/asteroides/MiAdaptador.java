@@ -11,10 +11,11 @@ import android.widget.TextView;
 
 import java.util.Vector;
 
-public class MiAdaptador extends
-        RecyclerView.Adapter<MiAdaptador.ViewHolder> {
+public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.ViewHolder> {
+
     private LayoutInflater inflador;    //El inflador permite crear una vista a partior del XML
     private Vector<String> lista;
+    protected View.OnClickListener onClickListener;
 
     public MiAdaptador(Context context, Vector<String> lista) {
         this.lista = lista;
@@ -26,6 +27,7 @@ public class MiAdaptador extends
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = inflador.inflate(R.layout.elemento_lista, parent, false);
+        v.setOnClickListener(onClickListener); //Aplica el escuchador a cada vista
         return new ViewHolder(v);
     }
 
@@ -60,6 +62,11 @@ public class MiAdaptador extends
             subtitutlo = (TextView)itemView.findViewById(R.id.subtitulo);
             icon = (ImageView)itemView.findViewById(R.id.icono);
         }
+    }
+
+    //Código para el ejercicio: Selección de un elemento en un RecyclerView (pag.168)
+    public void setOnItemClickListener(View.OnClickListener onClickListener){
+        this.onClickListener = onClickListener;
     }
 
 }

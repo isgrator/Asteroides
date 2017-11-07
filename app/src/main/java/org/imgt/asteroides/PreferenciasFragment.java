@@ -1,6 +1,7 @@
 package org.imgt.asteroides;
 
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
@@ -9,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 public class PreferenciasFragment extends PreferenceFragment {
+
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferencias);
@@ -28,17 +30,17 @@ public class PreferenciasFragment extends PreferenceFragment {
                         try {
                             valor = Integer.parseInt((String)newValue);
                         } catch(Exception e) {
-                            Toast.makeText(getActivity(), R.string.restrfragmentos1,
+                            Toast.makeText(getActivity(), getResources().getString(R.string.restrfragmentos1),
                                     Toast.LENGTH_SHORT).show();
                             return false;
                         }
                         if (valor>=0 && valor<=9) {
                             fragmentos.setSummary(
-                                    R.string.numfragmentosdescripcion + " ("+pref.getString("fragmentos","0")+")");
-                                    //R.string.numfragmentosdescripcion + " ("+valor+")");
+                                    //R.string.numfragmentosdescripcion + " ("+pref.getString("fragmentos","0")+")");
+                                    getResources().getString(R.string.numfragmentosdescripcion) + " ("+valor+")");
                             return true;
                         } else {
-                            Toast.makeText(getActivity(), R.string.restrfragmentos2,
+                            Toast.makeText(getActivity(), getResources().getString(R.string.restrfragmentos2)+": 9",
                                     Toast.LENGTH_SHORT).show();
                             return false;
                         }

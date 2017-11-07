@@ -27,5 +27,6 @@
     <string name="maxjugadores">Max. number of players</string>
     <string name="tipoconexion">Connection settings</string>
     <string name="restrfragmentos1">Must be a number</string>
-    <string name="restrfragmentos2">Maximum number of fragments: 9</string>
+    <string name="restrfragmentos2">Maximum number of fragments</string>
+    <string name="seleccion">Selection</string>
 </resources>
