@@ -8,7 +8,7 @@
     <string name="arrancar">Play</string>
     <string name="action_settings">Settings</string>
     <string name="acercade">About</string>
-    <string name="salir">Quit</string>
+    <string name="salir">Scores</string>
     <string name="acercadecontent">Asteroides is an applicacion made by Isabel María Gracián Torrent for the subject Android Programming Fundaments</string>
     <string name="buscar">Search</string>
     <string name="vectorial">vectorial</string>
@@ -21,9 +21,11 @@
     <string name="tipograficos">Graphics</string>
     <string name="tipograficosdescripcion">Select the graphics representation.</string>
     <string name="numfragmentos">Fragments number</string>
-    <string name="numfragmentosdescripcion">In how many bits an asteroid is fragmented.</string>
+    <string name="numfragmentosdescripcion">Bits of a fragmented asteroid.</string>
     <string name="modomultijugador">Multiplayer mode</string>
     <string name="multijugadoron">Enable multiplayer</string>
     <string name="maxjugadores">Max. number of players</string>
     <string name="tipoconexion">Connection settings</string>
+    <string name="restrfragmentos1">Must be a number</string>
+    <string name="restrfragmentos2">Maximum number of fragments: 9</string>
 </resources>
