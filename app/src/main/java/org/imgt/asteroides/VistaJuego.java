@@ -11,6 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VistaJuego extends View {
+
+    // //// NAVE //////
+    private Grafico nave; // Gráfico de la nave
+    private int giroNave; // Incremento de dirección
+    private double aceleracionNave; // aumento de velocidad
+    private static final int MAX_VELOCIDAD_NAVE = 20;
+    // Incremento estándar de giro y aceleración
+    private static final int PASO_GIRO_NAVE = 5;
+    private static final float PASO_ACELERACION_NAVE = 0.5f;
+
     // //// ASTEROIDES //////
     private List<Grafico> asteroides; // Lista con los Asteroides
     private int numAsteroides = 5; // Número inicial de asteroides
@@ -21,6 +31,8 @@ public class VistaJuego extends View {
         Drawable drawableNave, drawableAsteroide, drawableMisil;
         drawableAsteroide = //context.getResources().getDrawable(R.drawable.asteroide1);
                             ContextCompat.getDrawable(context, R.drawable.asteroide1);
+        drawableNave = ContextCompat.getDrawable(context, R.drawable.nave);
+        nave = new Grafico(this, drawableNave);
 
         asteroides = new ArrayList<Grafico>();
         for (int i = 0; i < numAsteroides; i++) {
@@ -37,10 +49,18 @@ public class VistaJuego extends View {
                                            int ancho_anter, int alto_anter) {
         super.onSizeChanged(ancho, alto, ancho_anter, alto_anter);
         // Una vez que conocemos nuestro ancho y alto.
+        //Nave en el centro de la pantalla
+        nave.setCenX((int) ancho/2);
+        nave.setCenY((int) alto/2);
         for (Grafico asteroide: asteroides) {
-            asteroide.setCenX((int) (Math.random()*ancho));
-            asteroide.setCenY((int) (Math.random()*alto));
+            //Código para evitar que ningún asteroide aparezca de forma inicial en el área que ocupa la nave
+            do {
+                asteroide.setCenX((int) (Math.random()*ancho));
+                asteroide.setCenY((int) (Math.random()*alto));
+            } while(asteroide.distancia(nave) < (ancho+alto)/5);
+
         }
+
     }
 
     @Override protected void onDraw(Canvas canvas) {
@@ -48,5 +68,6 @@ public class VistaJuego extends View {
         for (Grafico asteroide: asteroides) {
             asteroide.dibujaGrafico(canvas);
         }
+        nave.dibujaGrafico(canvas);
     }
 }
