@@ -40,7 +40,7 @@ public class VistaJuego extends View {
         SharedPreferences pref = PreferenceManager.
                 getDefaultSharedPreferences(getContext());
         if (pref.getString("graficos", "1").equals("0")) {
-            /*Cödigo para dibujar los asteroides con representación vectorial*/
+            /*Código para dibujar los asteroides con representación vectorial*/
             Path pathAsteroide = new Path();
             pathAsteroide.moveTo((float) 0.3, (float) 0.0);
             pathAsteroide.lineTo((float) 0.6, (float) 0.0);
@@ -61,14 +61,32 @@ public class VistaJuego extends View {
             dAsteroide.setIntrinsicWidth(50);
             dAsteroide.setIntrinsicHeight(50);
             drawableAsteroide = dAsteroide;
+
+            /*Código para representar vectorialmente la nave*/
+            Path pathNave = new Path();
+            pathNave.moveTo((float) 0.0, (float) 0.0);
+            pathNave.lineTo((float) 1.0, (float) 0.5);
+            pathNave.lineTo((float) 0.0, (float) 1.0);
+            pathNave.lineTo((float) 0.0, (float) 0.0);
+            ShapeDrawable dNave = new ShapeDrawable(
+                    new PathShape(pathNave, 1, 1));
+            dNave.getPaint().setColor(Color.YELLOW);
+            dNave.getPaint().setStyle(Paint.Style.STROKE);
+            dNave.setIntrinsicWidth(25);
+            dNave.setIntrinsicHeight(15);
+            drawableNave = dNave;
+
             setBackgroundColor(Color.BLACK);
             setLayerType(View.LAYER_TYPE_SOFTWARE,null);
         } else {
             //Código para dibujar los asteroides a partir de archivos png
             drawableAsteroide = ContextCompat.getDrawable(context, R.drawable.asteroide1);
             setLayerType(View.LAYER_TYPE_HARDWARE,null);
+            //Nave con gráfico png
+            drawableNave = ContextCompat.getDrawable(context, R.drawable.nave);
+
         }
-        drawableNave = ContextCompat.getDrawable(context, R.drawable.nave);
+
         nave = new Grafico(this, drawableNave);
 
         asteroides = new ArrayList<Grafico>();
