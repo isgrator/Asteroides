@@ -12,6 +12,7 @@ import android.graphics.drawable.shapes.PathShape;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -166,12 +167,40 @@ public class VistaJuego extends View {
         }
     }
 
-                                                                                                                                                                                                                                                                                                                                                                                            class ThreadJuego extends Thread{
+    class ThreadJuego extends Thread {
         @Override
-        public void run(){
-            while(true){
+        public void run() {
+            while (true) {
                 actualizaFisica();
             }
         }
+    }
+
+    //Código de uso del teclado (5.3)
+    @Override
+    public boolean onKeyDown(int codigoTecla, KeyEvent evento) {
+        super.onKeyDown(codigoTecla, evento);
+        // Suponemos que vamos a procesar la pulsación
+        boolean procesada = true;
+        switch (codigoTecla) {
+            case KeyEvent.KEYCODE_DPAD_UP:
+                aceleracionNave = +PASO_ACELERACION_NAVE;
+                break;
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                giroNave = -PASO_GIRO_NAVE;
+                break;
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                giroNave = +PASO_GIRO_NAVE;
+                break;
+            case KeyEvent.KEYCODE_DPAD_CENTER:
+            case KeyEvent.KEYCODE_ENTER:
+                //activaMisil();
+                break;
+            default:
+                // Si estamos aquí, no hay pulsación que nos interese
+                procesada = false;
+                break;
+        }
+        return procesada;
     }
 }
