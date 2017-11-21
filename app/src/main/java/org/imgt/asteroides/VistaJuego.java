@@ -40,7 +40,7 @@ public class VistaJuego extends View {
         SharedPreferences pref = PreferenceManager.
                 getDefaultSharedPreferences(getContext());
         if (pref.getString("graficos", "1").equals("0")) {
-            /*Código para dibujar los asteroides con representación vectorial*/
+            //Código para dibujar los asteroides con representación vectorial
             Path pathAsteroide = new Path();
             pathAsteroide.moveTo((float) 0.3, (float) 0.0);
             pathAsteroide.lineTo((float) 0.6, (float) 0.0);
@@ -62,7 +62,7 @@ public class VistaJuego extends View {
             dAsteroide.setIntrinsicHeight(50);
             drawableAsteroide = dAsteroide;
 
-            /*Código para representar vectorialmente la nave*/
+            //Código para representar vectorialmente la nave
             Path pathNave = new Path();
             pathNave.moveTo((float) 0.0, (float) 0.0);
             pathNave.lineTo((float) 1.0, (float) 0.5);
@@ -86,6 +86,8 @@ public class VistaJuego extends View {
             drawableNave = ContextCompat.getDrawable(context, R.drawable.nave);
 
         }
+
+
 
         nave = new Grafico(this, drawableNave);
 
