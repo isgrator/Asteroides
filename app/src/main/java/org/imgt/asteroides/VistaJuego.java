@@ -129,7 +129,7 @@ public class VistaJuego extends View {
         thread.start();
     }
 
-    @Override protected void onDraw(Canvas canvas) {
+    @Override synchronized protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         for (Grafico asteroide: asteroides) {
             asteroide.dibujaGrafico(canvas);
@@ -138,7 +138,7 @@ public class VistaJuego extends View {
     }
 
     //Código de la unidad 5 - Hilos de ejecución
-    protected void actualizaFisica() {
+    synchronized protected void actualizaFisica() {
         long ahora = System.currentTimeMillis();
         if (ultimoProceso + PERIODO_PROCESO > ahora) {
             return;    // Salir si el período de proceso no se ha cumplido.
@@ -166,7 +166,7 @@ public class VistaJuego extends View {
         }
     }
 
-    class ThreadJuego extends Thread{
+                                                                                                                                                                                                                                                                                                                                                                                            class ThreadJuego extends Thread{
         @Override
         public void run(){
             while(true){
