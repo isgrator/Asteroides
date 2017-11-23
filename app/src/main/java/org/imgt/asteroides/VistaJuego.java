@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.PathShape;
@@ -20,6 +21,7 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,7 @@ public class VistaJuego extends View implements SensorEventListener{
 
     private Vector<Grafico> misiles;
     private Drawable drawableMisil;
+    private AnimationDrawable animationDrawableMisil;
     private static int PASO_VELOCIDAD_MISIL = 12;
     private Vector<Integer> tiempoMisiles;
 
@@ -129,7 +132,11 @@ public class VistaJuego extends View implements SensorEventListener{
             setLayerType(View.LAYER_TYPE_HARDWARE,null);
             //Nave con gráfico png
             drawableNave = ContextCompat.getDrawable(context, R.drawable.nave);
-            drawableMisil = ContextCompat.getDrawable(context, R.drawable.misil1);
+            //drawableMisil = ContextCompat.getDrawable(context, R.drawable.misil1);
+            animationDrawableMisil = (AnimationDrawable) ContextCompat.getDrawable(context,R.drawable.animacion);
+            ImageView vista= new ImageView(context);
+            vista.setImageDrawable(animationDrawableMisil);
+            animationDrawableMisil.start();
 
         }
 
@@ -403,7 +410,8 @@ public class VistaJuego extends View implements SensorEventListener{
     private void activaMisil() {
 
 
-        Grafico misil= new Grafico(this,drawableMisil);
+        //Grafico misil= new Grafico(this,drawableMisil);
+        Grafico misil= new Grafico(this,animationDrawableMisil);
 
         misil.setCenX(nave.getCenX());
         misil.setCenY(nave.getCenY());
@@ -416,6 +424,7 @@ public class VistaJuego extends View implements SensorEventListener{
         misiles.add(misil);
         tiempoMisiles.add((int) Math.min(this.getWidth() / Math.abs( misil.
                 getIncX()), this.getHeight() / Math.abs(misil.getIncY())) - 2);
+
     }
 
 }
