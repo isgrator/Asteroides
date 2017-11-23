@@ -13,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -20,6 +21,9 @@ import java.util.List;
 
 public class VistaJuego extends View {
 
+    //Manejo táctil de la nave
+    private float mX=0, mY=0;
+    private boolean disparo=false;
     // //// THREAD Y TIEMPO //////
     // Thread encargado de procesar el juego
     private ThreadJuego thread = new ThreadJuego();
@@ -223,4 +227,47 @@ public class VistaJuego extends View {
         }
         return procesada;
     }
+
+
+    //Código para manejo dela nave con pantalla táctil (5.4.2)
+    /*
+        movimiento horizontal -> gira la nave
+        movimiento vertical hacia arriba -> acelera nave
+        movimiento vertical hacia abajo -> decelera la nave
+     */
+
+    @Override
+    public boolean onTouchEvent (MotionEvent event) {
+        super.onTouchEvent(event);
+        float x = event.getX();
+        float y = event.getY();
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                disparo=true;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                float dx = Math.abs(x - mX);
+                float dy = Math.abs(y - mY);
+                if (dy<1 && dx>1){
+                    giroNave = Math.round((x - mX) / 2);
+                    disparo = false;
+                } else if (dx<6 && dy>6){
+                    //Con el valor absoluto logro que no decelere la nave
+                    //Sólo se puede decelerar girando primero 180º y acelerando a continuación.
+                    aceleracionNave = Math.abs(Math.round((mY - y) / 10));
+                    disparo = false;
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                giroNave = 0;
+                aceleracionNave = 0;
+                if (disparo){
+                    //activaMisil();
+                }
+                break;
+        }
+        mX=x; mY=y;
+        return true;
+    }
+
 }
