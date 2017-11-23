@@ -54,9 +54,9 @@ public class VistaJuego extends View implements SensorEventListener{
         super(context, attrs);
         Drawable drawableNave, drawableAsteroide, drawableMisil;
 
-        //registro del sensor
+        //registro del sensor( TYPE_ORIENTATION si fuese de orientación)
         SensorManager mSensorManager= (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
-        List<Sensor> listSensors= mSensorManager.getSensorList(Sensor.TYPE_ORIENTATION);
+        List<Sensor> listSensors= mSensorManager.getSensorList(Sensor.TYPE_ACCELEROMETER);
         if(!listSensors.isEmpty()){
             Sensor orientationSensor= listSensors.get(0);
             mSensorManager.registerListener(this, orientationSensor,SensorManager.SENSOR_DELAY_GAME);
@@ -290,12 +290,24 @@ public class VistaJuego extends View implements SensorEventListener{
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+
+        float valor = event.values[1]; //Cogemos el eje Y
+        if (!hayValorInicial){
+            valorInicial = valor;
+            hayValorInicial = true;
+        }
+        giroNave=(int) Math.round((valor-valorInicial)/2 );
+    }
+
+    /* Versión para sensor de orientacion */
+    /*@Override
+    public void onSensorChanged(SensorEvent event) {
         float valor = event.values[1];
         if (!hayValorInicial){
             valorInicial = valor;
             hayValorInicial = true;
         }
         giroNave=(int) (valor-valorInicial)/3 ;
-    }
+    }*/
 
 }
