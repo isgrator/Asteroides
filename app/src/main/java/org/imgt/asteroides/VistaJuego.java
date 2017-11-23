@@ -9,6 +9,7 @@ import android.graphics.Path;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.PathShape;
+import android.graphics.drawable.shapes.RectShape;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -25,6 +26,11 @@ import java.util.List;
 
 public class VistaJuego extends View implements SensorEventListener{
 
+    // //// MISIL //////
+    private Grafico misil;
+    private static int PASO_VELOCIDAD_MISIL = 12;
+    private boolean misilActivo = false;
+    private int tiempoMisil;
     //Manejo táctil de la nave
     private boolean controlPorSensor= false;
     private float mX=0, mY=0;
@@ -62,6 +68,8 @@ public class VistaJuego extends View implements SensorEventListener{
             Sensor orientationSensor= listSensors.get(0);
             mSensorManager.registerListener(this, orientationSensor,SensorManager.SENSOR_DELAY_GAME);
         }
+
+
 
         SharedPreferences pref = PreferenceManager.
                 getDefaultSharedPreferences(getContext());
@@ -104,12 +112,21 @@ public class VistaJuego extends View implements SensorEventListener{
 
             setBackgroundColor(Color.BLACK);
             setLayerType(View.LAYER_TYPE_SOFTWARE,null);
+
+            //Creando el misil vectorial
+            ShapeDrawable dMisil = new ShapeDrawable(new RectShape());
+            dMisil.getPaint().setColor(Color.WHITE);
+            dMisil.getPaint().setStyle(Paint.Style.STROKE);
+            dMisil.setIntrinsicWidth(15);
+            dMisil.setIntrinsicHeight(3);
+            drawableMisil = dMisil;
         } else {
             //Código para dibujar los asteroides a partir de archivos png
             drawableAsteroide = ContextCompat.getDrawable(context, R.drawable.asteroide1);
             setLayerType(View.LAYER_TYPE_HARDWARE,null);
             //Nave con gráfico png
             drawableNave = ContextCompat.getDrawable(context, R.drawable.nave);
+            drawableMisil = ContextCompat.getDrawable(context, R.drawable.misil1);
 
         }
 
@@ -126,6 +143,8 @@ public class VistaJuego extends View implements SensorEventListener{
             asteroide.setRotacion((int) (Math.random() * 8 - 4));
             asteroides.add(asteroide);
         }
+
+        misil= new Grafico(this, drawableMisil);
 
         //Configuración de tipo de entrada en preferencia (pág.261)
         //pref = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -163,6 +182,9 @@ public class VistaJuego extends View implements SensorEventListener{
             asteroide.dibujaGrafico(canvas);
         }
         nave.dibujaGrafico(canvas);
+        if(misilActivo){
+            misil.dibujaGrafico(canvas);
+        }
     }
 
     //Código de la unidad 5 - Hilos de ejecución
@@ -191,6 +213,21 @@ public class VistaJuego extends View implements SensorEventListener{
         nave.incrementaPos(factorMov); // Actualizamos posición
         for (Grafico asteroide : asteroides) {
             asteroide.incrementaPos(factorMov);
+        }
+
+        // Actualizamos posición de misil
+        if (misilActivo) {
+            misil.incrementaPos(factorMov);
+            tiempoMisil-=factorMov;
+            if (tiempoMisil < 0) {
+                misilActivo = false;
+            } else {
+                for (int i = 0; i < asteroides.size(); i++)
+                    if (misil.verificaColision(asteroides.get(i))) {
+                        destruyeAsteroide(i);
+                        break;
+                    }
+            }
         }
     }
 
@@ -223,7 +260,7 @@ public class VistaJuego extends View implements SensorEventListener{
                     break;
                 case KeyEvent.KEYCODE_DPAD_CENTER:
                 case KeyEvent.KEYCODE_ENTER:
-                    //activaMisil();
+                    activaMisil();
                     break;
                 default:
                     // Si estamos aquí, no hay pulsación que nos interese
@@ -265,13 +302,13 @@ public class VistaJuego extends View implements SensorEventListener{
     @Override
     public boolean onTouchEvent (MotionEvent event) {
         super.onTouchEvent(event);
+        float x = event.getX();
+        float y = event.getY();
         if(!controlPorSensor) {
-            float x = event.getX();
-            float y = event.getY();
             switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
+                /*case MotionEvent.ACTION_DOWN:
                     disparo = true;
-                    break;
+                    break;*/
                 case MotionEvent.ACTION_MOVE:
                     float dx = Math.abs(x - mX);
                     float dy = Math.abs(y - mY);
@@ -285,17 +322,32 @@ public class VistaJuego extends View implements SensorEventListener{
                         disparo = false;
                     }
                     break;
-                case MotionEvent.ACTION_UP:
+                /*case MotionEvent.ACTION_UP:
                     giroNave = 0;
                     aceleracionNave = 0;
                     if (disparo) {
-                        //activaMisil();
+                        activaMisil();
                     }
                     break;
+                */
             }
-            mX = x;
-            mY = y;
+
         }
+        //Siempre se dispara tocando la pantalla
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                disparo = true;
+                break;
+            case MotionEvent.ACTION_UP:
+                giroNave = 0;
+                aceleracionNave = 0;
+                if (disparo) {
+                    activaMisil();
+                }
+                break;
+        }
+        mX = x;
+        mY = y;
         return true;
     }
 
@@ -320,13 +372,30 @@ public class VistaJuego extends View implements SensorEventListener{
             //Aceleración de la nave con sensores
             float valorAceleracion = event.values[0];  //Eje Z
             if (!hayValorInicialAceleracion) {
-                valorInicialAceleracion = valorGiro;
+                valorInicialAceleracion = valorAceleracion;
                 hayValorInicialAceleracion = true;
             }
-            aceleracionNave = Math.abs(Math.round((valorAceleracion - valorInicialAceleracion) / 17));
+            aceleracionNave = Math.abs(Math.round((valorAceleracion - valorInicialAceleracion) / 10));
         }
     }
 
-
+    //Métodos para los misiles
+    private void destruyeAsteroide(int i) {
+        asteroides.remove(i);
+        misilActivo = false;
+        this.postInvalidate();
+    }
+    private void activaMisil() {
+        misil.setCenX(nave.getCenX());
+        misil.setCenY(nave.getCenY());
+        misil.setAngulo(nave.getAngulo());
+        misil.setIncX(Math.cos(Math.toRadians(misil.getAngulo())) *
+                PASO_VELOCIDAD_MISIL);
+        misil.setIncY(Math.sin(Math.toRadians(misil.getAngulo())) *
+                PASO_VELOCIDAD_MISIL);
+        tiempoMisil = (int) Math.min(this.getWidth() / Math.abs( misil.
+                getIncX()), this.getHeight() / Math.abs(misil.getIncY())) - 2;
+        misilActivo = true;
+    }
 
 }

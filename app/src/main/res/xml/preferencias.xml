@@ -25,7 +25,7 @@
         android:summary="@string/tipocontroldescripcion"
         android:entries="@array/tiposControl"
         android:entryValues="@array/tiposControlValores"
-        android:defaultValue="1"/>
+        android:defaultValue="0"/>
     <PreferenceCategory android:title="@string/modomultijugador">
         <CheckBoxPreference
             android:key="multijugador"
