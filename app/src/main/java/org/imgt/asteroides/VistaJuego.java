@@ -285,29 +285,30 @@ public class VistaJuego extends View implements SensorEventListener{
     //Implementación de la interfaz SensorEventListener
     @Override public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
-    private boolean hayValorInicial = false;
-    private float valorInicial;
+    private boolean hayValorInicialGiro = false;
+    private boolean hayValorInicialAceleracion = false;
+    private float valorInicialGiro, valorInicialAceleracion;
 
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-        float valor = event.values[1]; //Cogemos el eje Y
-        if (!hayValorInicial){
-            valorInicial = valor;
-            hayValorInicial = true;
+        float valorGiro = event.values[1]; //Cogemos el eje Y
+
+        if (!hayValorInicialGiro){
+            valorInicialGiro = valorGiro;
+            hayValorInicialGiro = true;
         }
-        giroNave=(int) Math.round((valor-valorInicial)/2 );
+        giroNave=(int) Math.round((valorGiro-valorInicialGiro)/2 );
+
+        //Aceleración de la nave con sensores
+        float valorAceleracion= event.values[0];  //Eje Z
+        if (!hayValorInicialAceleracion){
+            valorInicialAceleracion = valorGiro;
+            hayValorInicialAceleracion = true;
+        }
+        aceleracionNave= Math.abs(Math.round((valorAceleracion - valorInicialAceleracion) / 17));
     }
 
-    /* Versión para sensor de orientacion */
-    /*@Override
-    public void onSensorChanged(SensorEvent event) {
-        float valor = event.values[1];
-        if (!hayValorInicial){
-            valorInicial = valor;
-            hayValorInicial = true;
-        }
-        giroNave=(int) (valor-valorInicial)/3 ;
-    }*/
+
 
 }
