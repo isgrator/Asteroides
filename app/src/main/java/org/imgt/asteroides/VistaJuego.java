@@ -9,6 +9,10 @@ import android.graphics.Path;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.PathShape;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
@@ -19,7 +23,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VistaJuego extends View {
+public class VistaJuego extends View implements SensorEventListener{
 
     //Manejo táctil de la nave
     private float mX=0, mY=0;
@@ -49,6 +53,14 @@ public class VistaJuego extends View {
     public VistaJuego(Context context, AttributeSet attrs) {
         super(context, attrs);
         Drawable drawableNave, drawableAsteroide, drawableMisil;
+
+        //registro del sensor
+        SensorManager mSensorManager= (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+        List<Sensor> listSensors= mSensorManager.getSensorList(Sensor.TYPE_ORIENTATION);
+        if(!listSensors.isEmpty()){
+            Sensor orientationSensor= listSensors.get(0);
+            mSensorManager.registerListener(this, orientationSensor,SensorManager.SENSOR_DELAY_GAME);
+        }
 
         SharedPreferences pref = PreferenceManager.
                 getDefaultSharedPreferences(getContext());
@@ -268,6 +280,22 @@ public class VistaJuego extends View {
         }
         mX=x; mY=y;
         return true;
+    }
+
+    //Implementación de la interfaz SensorEventListener
+    @Override public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+
+    private boolean hayValorInicial = false;
+    private float valorInicial;
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        float valor = event.values[1];
+        if (!hayValorInicial){
+            valorInicial = valor;
+            hayValorInicial = true;
+        }
+        giroNave=(int) (valor-valorInicial)/3 ;
     }
 
 }
