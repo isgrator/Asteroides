@@ -176,10 +176,12 @@ public class VistaJuego extends View implements SensorEventListener{
         thread.start();
     }
 
-    @Override synchronized protected void onDraw(Canvas canvas) {
+    @Override protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        for (Grafico asteroide: asteroides) {
-            asteroide.dibujaGrafico(canvas);
+        synchronized (asteroides) {
+            for (Grafico asteroide : asteroides) {
+                asteroide.dibujaGrafico(canvas);
+            }
         }
         nave.dibujaGrafico(canvas);
         if(misilActivo){
@@ -188,7 +190,7 @@ public class VistaJuego extends View implements SensorEventListener{
     }
 
     //Código de la unidad 5 - Hilos de ejecución
-    synchronized protected void actualizaFisica() {
+     protected void actualizaFisica() {
         long ahora = System.currentTimeMillis();
         if (ultimoProceso + PERIODO_PROCESO > ahora) {
             return;    // Salir si el período de proceso no se ha cumplido.
@@ -381,8 +383,10 @@ public class VistaJuego extends View implements SensorEventListener{
 
     //Métodos para los misiles
     private void destruyeAsteroide(int i) {
-        asteroides.remove(i);
-        misilActivo = false;
+        synchronized (asteroides) {
+            asteroides.remove(i);
+            misilActivo = false;
+        }
         this.postInvalidate();
     }
     private void activaMisil() {
