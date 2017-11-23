@@ -29,4 +29,8 @@
     <string name="restrfragmentos1">Must be a number</string>
     <string name="restrfragmentos2">Maximum number of fragments</string>
     <string name="seleccion">Selection</string>
+    <string name="ptactil">Touch screen</string>
+    <string name="sensores">Sensors</string>
+    <string name="tipocontrol">Navigating controls</string>
+    <string name="tipocontroldescripcion">How do you want to fly your starship?</string>
 </resources>

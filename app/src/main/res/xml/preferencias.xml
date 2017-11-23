@@ -19,6 +19,13 @@
         android:summary="@string/numfragmentosdescripcion"
         android:inputType="number"
         android:defaultValue="3"/>
+    <ListPreference
+        android:key="controles"
+        android:title="@string/tipocontrol"
+        android:summary="@string/tipocontroldescripcion"
+        android:entries="@array/tiposControl"
+        android:entryValues="@array/tiposControlValores"
+        android:defaultValue="1"/>
     <PreferenceCategory android:title="@string/modomultijugador">
         <CheckBoxPreference
             android:key="multijugador"

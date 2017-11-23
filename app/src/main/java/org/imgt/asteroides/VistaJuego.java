@@ -26,6 +26,7 @@ import java.util.List;
 public class VistaJuego extends View implements SensorEventListener{
 
     //Manejo táctil de la nave
+    private boolean controlPorSensor= false;
     private float mX=0, mY=0;
     private boolean disparo=false;
     // //// THREAD Y TIEMPO //////
@@ -125,6 +126,16 @@ public class VistaJuego extends View implements SensorEventListener{
             asteroide.setRotacion((int) (Math.random() * 8 - 4));
             asteroides.add(asteroide);
         }
+
+        //Configuración de tipo de entrada en preferencia (pág.261)
+        //pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        if (pref.getString("controles", "1").equals("0")) {
+            //Activar control de la nave por sensores
+            controlPorSensor=true;
+        }else{
+            //Activar control por pantalla táctil
+            controlPorSensor=false;
+        }
     }
 
     @Override protected void onSizeChanged(int ancho, int alto,
@@ -198,25 +209,28 @@ public class VistaJuego extends View implements SensorEventListener{
         super.onKeyDown(codigoTecla, evento);
         // Suponemos que vamos a procesar la pulsación
         boolean procesada = true;
-        switch (codigoTecla) {
-            case KeyEvent.KEYCODE_DPAD_UP:
-                aceleracionNave = +PASO_ACELERACION_NAVE;
-                break;
-            case KeyEvent.KEYCODE_DPAD_LEFT:
-                giroNave = -PASO_GIRO_NAVE;
-                break;
-            case KeyEvent.KEYCODE_DPAD_RIGHT:
-                giroNave = +PASO_GIRO_NAVE;
-                break;
-            case KeyEvent.KEYCODE_DPAD_CENTER:
-            case KeyEvent.KEYCODE_ENTER:
-                //activaMisil();
-                break;
-            default:
-                // Si estamos aquí, no hay pulsación que nos interese
-                procesada = false;
-                break;
-        }
+
+
+            switch (codigoTecla) {
+                case KeyEvent.KEYCODE_DPAD_UP:
+                    aceleracionNave = +PASO_ACELERACION_NAVE;
+                    break;
+                case KeyEvent.KEYCODE_DPAD_LEFT:
+                    giroNave = -PASO_GIRO_NAVE;
+                    break;
+                case KeyEvent.KEYCODE_DPAD_RIGHT:
+                    giroNave = +PASO_GIRO_NAVE;
+                    break;
+                case KeyEvent.KEYCODE_DPAD_CENTER:
+                case KeyEvent.KEYCODE_ENTER:
+                    //activaMisil();
+                    break;
+                default:
+                    // Si estamos aquí, no hay pulsación que nos interese
+                    procesada = false;
+                    break;
+            }
+
         return procesada;
     }
 
@@ -224,19 +238,19 @@ public class VistaJuego extends View implements SensorEventListener{
         super.onKeyUp(codigoTecla, evento);
         // Suponemos que vamos a procesar la pulsación
         boolean procesada = true;
-        switch (codigoTecla) {
-            case KeyEvent.KEYCODE_DPAD_UP:
-                aceleracionNave = 0;
-                break;
-            case KeyEvent.KEYCODE_DPAD_LEFT:
-            case KeyEvent.KEYCODE_DPAD_RIGHT:
-                giroNave = 0;
-                break;
-            default:
-                // Si estamos aquí, no hay pulsación que nos interese
-                procesada = false;
-                break;
-        }
+            switch (codigoTecla) {
+                case KeyEvent.KEYCODE_DPAD_UP:
+                    aceleracionNave = 0;
+                    break;
+                case KeyEvent.KEYCODE_DPAD_LEFT:
+                case KeyEvent.KEYCODE_DPAD_RIGHT:
+                    giroNave = 0;
+                    break;
+                default:
+                    // Si estamos aquí, no hay pulsación que nos interese
+                    procesada = false;
+                    break;
+            }
         return procesada;
     }
 
@@ -251,34 +265,37 @@ public class VistaJuego extends View implements SensorEventListener{
     @Override
     public boolean onTouchEvent (MotionEvent event) {
         super.onTouchEvent(event);
-        float x = event.getX();
-        float y = event.getY();
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                disparo=true;
-                break;
-            case MotionEvent.ACTION_MOVE:
-                float dx = Math.abs(x - mX);
-                float dy = Math.abs(y - mY);
-                if (dy<1 && dx>1){
-                    giroNave = Math.round((x - mX) / 2);
-                    disparo = false;
-                } else if (dx<6 && dy>6){
-                    //Con el valor absoluto logro que no decelere la nave
-                    //Sólo se puede decelerar girando primero 180º y acelerando a continuación.
-                    aceleracionNave = Math.abs(Math.round((mY - y) / 10));
-                    disparo = false;
-                }
-                break;
-            case MotionEvent.ACTION_UP:
-                giroNave = 0;
-                aceleracionNave = 0;
-                if (disparo){
-                    //activaMisil();
-                }
-                break;
+        if(!controlPorSensor) {
+            float x = event.getX();
+            float y = event.getY();
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    disparo = true;
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    float dx = Math.abs(x - mX);
+                    float dy = Math.abs(y - mY);
+                    if (dy < 1 && dx > 1) {
+                        giroNave = Math.round((x - mX) / 2);
+                        disparo = false;
+                    } else if (dx < 6 && dy > 6) {
+                        //Con el valor absoluto logro que no decelere la nave
+                        //Sólo se puede decelerar girando primero 180º y acelerando a continuación.
+                        aceleracionNave = Math.abs(Math.round((mY - y) / 10));
+                        disparo = false;
+                    }
+                    break;
+                case MotionEvent.ACTION_UP:
+                    giroNave = 0;
+                    aceleracionNave = 0;
+                    if (disparo) {
+                        //activaMisil();
+                    }
+                    break;
+            }
+            mX = x;
+            mY = y;
         }
-        mX=x; mY=y;
         return true;
     }
 
@@ -291,22 +308,23 @@ public class VistaJuego extends View implements SensorEventListener{
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        if(controlPorSensor) {
+            float valorGiro = event.values[1]; //Cogemos el eje Y
 
-        float valorGiro = event.values[1]; //Cogemos el eje Y
+            if (!hayValorInicialGiro) {
+                valorInicialGiro = valorGiro;
+                hayValorInicialGiro = true;
+            }
+            giroNave = (int) Math.round((valorGiro - valorInicialGiro) / 2);
 
-        if (!hayValorInicialGiro){
-            valorInicialGiro = valorGiro;
-            hayValorInicialGiro = true;
+            //Aceleración de la nave con sensores
+            float valorAceleracion = event.values[0];  //Eje Z
+            if (!hayValorInicialAceleracion) {
+                valorInicialAceleracion = valorGiro;
+                hayValorInicialAceleracion = true;
+            }
+            aceleracionNave = Math.abs(Math.round((valorAceleracion - valorInicialAceleracion) / 17));
         }
-        giroNave=(int) Math.round((valorGiro-valorInicialGiro)/2 );
-
-        //Aceleración de la nave con sensores
-        float valorAceleracion= event.values[0];  //Eje Z
-        if (!hayValorInicialAceleracion){
-            valorInicialAceleracion = valorGiro;
-            hayValorInicialAceleracion = true;
-        }
-        aceleracionNave= Math.abs(Math.round((valorAceleracion - valorInicialAceleracion) / 17));
     }
 
 
