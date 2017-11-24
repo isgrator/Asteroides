@@ -17,12 +17,14 @@ public class Juego extends Activity {
     //Métodos*************************************
     @Override protected void onPause() {
         vistaJuego.getThread().pausar();
+        vistaJuego.desactivarSensores();
         super.onPause();
     }
 
     @Override protected void onResume() {
         super.onResume();
         vistaJuego.getThread().reanudar();
+        vistaJuego.activarSensores();
     }
 
     @Override protected void onDestroy() {

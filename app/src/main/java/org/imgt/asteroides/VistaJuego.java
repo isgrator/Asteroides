@@ -63,17 +63,19 @@ public class VistaJuego extends View implements SensorEventListener{
     private int numAsteroides = 5; // Número inicial de asteroides
     private int numFragmentos = 3; // Fragmentos en que se divide
 
+
+
     public VistaJuego(Context context, AttributeSet attrs) {
         super(context, attrs);
         Drawable drawableNave, drawableAsteroide;
 
         //registro del sensor( TYPE_ORIENTATION si fuese de orientación)
-        SensorManager mSensorManager= (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+        /*SensorManager mSensorManager= (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         List<Sensor> listSensors= mSensorManager.getSensorList(Sensor.TYPE_ACCELEROMETER);
         if(!listSensors.isEmpty()){
             Sensor orientationSensor= listSensors.get(0);
             mSensorManager.registerListener(this, orientationSensor,SensorManager.SENSOR_DELAY_GAME);
-        }
+        }*/
 
 
 
@@ -454,4 +456,22 @@ public class VistaJuego extends View implements SensorEventListener{
     public ThreadJuego getThread() {
         return thread;
     }
+
+    //Desactivar los sensores con los eventos del ciclo de vida pág. 276
+    public void activarSensores(){
+
+        SensorManager mSensorManager= (SensorManager) this.getContext().getSystemService(Context.SENSOR_SERVICE);
+        List<Sensor> listSensors= mSensorManager.getSensorList(Sensor.TYPE_ACCELEROMETER);
+        if(!listSensors.isEmpty()){
+            Sensor orientationSensor= listSensors.get(0);
+            mSensorManager.registerListener(this, orientationSensor,SensorManager.SENSOR_DELAY_GAME);
+        }
+
+    }
+
+    public void desactivarSensores(){
+        SensorManager mSensorManager= (SensorManager) this.getContext().getSystemService(Context.SENSOR_SERVICE);
+        mSensorManager.unregisterListener(this);
+    }
+
 }
