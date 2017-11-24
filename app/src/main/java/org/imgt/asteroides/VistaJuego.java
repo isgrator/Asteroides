@@ -15,6 +15,8 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
@@ -29,8 +31,12 @@ import java.util.Vector;
 
 public class VistaJuego extends View implements SensorEventListener{
 
-    // //// MISIL //////
+    //MULTIMEDIA ///////
+    SoundPool soundPool;
+    int idDisparo, idExplosion;
 
+
+    // //// MISIL //////
     private Vector<Grafico> misiles;
     private Drawable drawableMisil;
     private AnimationDrawable animationDrawableMisil;
@@ -69,6 +75,11 @@ public class VistaJuego extends View implements SensorEventListener{
         super(context, attrs);
         Drawable drawableNave, drawableAsteroide;
 
+        soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
+        idDisparo = soundPool.load(context, R.raw.disparo, 0);
+        idExplosion = soundPool.load(context, R.raw.explosion, 0);
+
+
         //registro del sensor( TYPE_ORIENTATION si fuese de orientación)
         /*SensorManager mSensorManager= (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         List<Sensor> listSensors= mSensorManager.getSensorList(Sensor.TYPE_ACCELEROMETER);
@@ -76,8 +87,6 @@ public class VistaJuego extends View implements SensorEventListener{
             Sensor orientationSensor= listSensors.get(0);
             mSensorManager.registerListener(this, orientationSensor,SensorManager.SENSOR_DELAY_GAME);
         }*/
-
-
 
         SharedPreferences pref = PreferenceManager.
                 getDefaultSharedPreferences(getContext());
@@ -430,6 +439,7 @@ public class VistaJuego extends View implements SensorEventListener{
         synchronized (asteroides) {
             asteroides.remove(i);
             //misilActivo = false;
+            soundPool.play(idExplosion, 1 ,1 , 0, 0, 1);
         }
         this.postInvalidate();
     }
@@ -450,6 +460,8 @@ public class VistaJuego extends View implements SensorEventListener{
         misiles.add(misil);
         tiempoMisiles.add((int) Math.min(this.getWidth() / Math.abs( misil.
                 getIncX()), this.getHeight() / Math.abs(misil.getIncY())) - 2);
+
+        soundPool.play(idDisparo, 1, 1, 1, 0, 1);
 
     }
 
