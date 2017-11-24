@@ -79,7 +79,6 @@ public class VistaJuego extends View implements SensorEventListener{
         idDisparo = soundPool.load(context, R.raw.disparo, 0);
         idExplosion = soundPool.load(context, R.raw.explosion, 0);
 
-
         //registro del sensor( TYPE_ORIENTATION si fuese de orientación)
         /*SensorManager mSensorManager= (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         List<Sensor> listSensors= mSensorManager.getSensorList(Sensor.TYPE_ACCELEROMETER);
@@ -381,7 +380,7 @@ public class VistaJuego extends View implements SensorEventListener{
                     } else if (dx < 6 && dy > 6) {
                         //Con el valor absoluto logro que no decelere la nave
                         //Sólo se puede decelerar girando primero 180º y acelerando a continuación.
-                        aceleracionNave = Math.abs(Math.round((mY - y) / 10));
+                        aceleracionNave = Math.abs(Math.round((mY - y) / 13));
                         disparo = false;
                     }
                     break;
@@ -430,7 +429,7 @@ public class VistaJuego extends View implements SensorEventListener{
                 valorInicialAceleracion = valorAceleracion;
                 hayValorInicialAceleracion = true;
             }
-            aceleracionNave = Math.abs(Math.round((valorAceleracion - valorInicialAceleracion) / 10));
+            aceleracionNave = Math.abs(Math.round((valorAceleracion - valorInicialAceleracion) / 13));
         }
     }
 

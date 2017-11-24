@@ -21,6 +21,7 @@
         android:gravity="center"
         android:text="@string/asteroides"
         android:textAppearance="@style/EstiloTitulo"
+        android:textSize="30sp"
         app:layout_constraintHorizontal_bias="0.681"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

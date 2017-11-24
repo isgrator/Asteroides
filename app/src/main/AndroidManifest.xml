@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.imgt.asteroides">
+
+    <application
+
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/asteroides"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.NoTitleBar">
+        <activity android:name=".MainActivity" android:theme="@style/TemaAsteroides">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".AcercaDeActivity"
+            android:label="@string/acercade"
+            android:theme="@android:style/Theme.Dialog"/>
+        <activity
+            android:name=".PreferenciasActivity"
+            android:label="@string/action_settings"
+            android:theme="@android:style/Theme.Dialog"/>
+        <activity
+            android:name=".Puntuaciones"
+            android:label="@string/salir"
+            android:theme="@style/Theme.AppCompat.DayNight"/>
+        <activity
+            android:name=".Juego"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
+
+
+    </application>
+
+</manifest>
