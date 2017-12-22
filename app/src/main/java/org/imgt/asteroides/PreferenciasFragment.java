@@ -20,6 +20,7 @@ public class PreferenciasFragment extends PreferenceFragment {
         final SharedPreferences pref =
                 PreferenceManager.getDefaultSharedPreferences(this.getActivity());
 
+        //Num. fragmentos
         final EditTextPreference fragmentos = (EditTextPreference) findPreference("fragmentos");
         fragmentos.setOnPreferenceChangeListener(
                 new Preference.OnPreferenceChangeListener() {
