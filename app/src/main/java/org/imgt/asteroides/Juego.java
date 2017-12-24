@@ -2,6 +2,7 @@ package org.imgt.asteroides;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 public class Juego extends Activity {
 
@@ -19,17 +20,20 @@ public class Juego extends Activity {
         vistaJuego.getThread().pausar();
         vistaJuego.desactivarSensores();
         super.onPause();
+        //Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
     }
 
     @Override protected void onResume() {
         super.onResume();
         vistaJuego.getThread().reanudar();
         vistaJuego.activarSensores();
+        //Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
     }
 
     @Override protected void onDestroy() {
         vistaJuego.getThread().detener();
         super.onDestroy();
+        //Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
     }
 
 }

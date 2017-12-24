@@ -226,7 +226,7 @@ public class VistaJuego extends View implements SensorEventListener{
             return;    // Salir si el período de proceso no se ha cumplido.
         }
         // Para una ejecución en tiempo real calculamos el factor de movimiento
-        double factorMov = (ahora - ultimoProceso) / PERIODO_PROCESO;
+        double factorMov = (ahora - ultimoProceso) / PERIODO_PROCESO;   //factorMov = retardo
         ultimoProceso = ahora; // Para la próxima vez
 
         // Actualizamos velocidad y dirección de la nave a partir de
@@ -280,6 +280,9 @@ public class VistaJuego extends View implements SensorEventListener{
         }
 
         public synchronized void reanudar() {
+            //Esto permite que se pare el movimiento cuando pasamos a segundo plano.
+            //Sin esta línea, la app sigue moviendo los asteroides etc.
+            ultimoProceso = System.currentTimeMillis();
             pausa = false;
             notify();
         }
@@ -444,9 +447,18 @@ public class VistaJuego extends View implements SensorEventListener{
     }
     private void activaMisil() {
 
+        Grafico misil;
 
-        //Grafico misil= new Grafico(this,drawableMisil);
-        Grafico misil= new Grafico(this,animationDrawableMisil);
+        SharedPreferences pref = PreferenceManager.
+                getDefaultSharedPreferences(getContext());
+        if (pref.getString("graficos", "1").equals("0")) {
+            misil= new Grafico(this,drawableMisil);
+        }else{
+            misil= new Grafico(this,animationDrawableMisil);
+        }
+
+
+
 
         misil.setCenX(nave.getCenX());
         misil.setCenY(nave.getCenY());
