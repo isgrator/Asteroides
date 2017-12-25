@@ -1,10 +1,12 @@
 package org.imgt.asteroides;
 
+import java.util.List;
 import java.util.Vector;
 
 public class AlmacenPuntuacionesArray implements AlmacenPuntuaciones{
 
-    private Vector<String> puntuaciones;
+    //private Vector<String> puntuaciones;
+    private List<String> puntuaciones;
 
     public AlmacenPuntuacionesArray(){
         puntuaciones = new Vector<String>();
@@ -17,7 +19,10 @@ public class AlmacenPuntuacionesArray implements AlmacenPuntuaciones{
         puntuaciones.add(0, puntos +" "+ nombre);
     }
 
-    @Override public Vector<String> listaPuntuaciones(int cantidad){
+    /*@Override public Vector<String> listaPuntuaciones(int cantidad){
+        return puntuaciones;
+    }*/
+    @Override public List<String> listaPuntuaciones(int cantidad){
         return puntuaciones;
     }
 }

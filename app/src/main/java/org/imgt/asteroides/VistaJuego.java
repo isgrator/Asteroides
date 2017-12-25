@@ -1,6 +1,8 @@
 package org.imgt.asteroides;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -17,6 +19,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
@@ -30,6 +33,10 @@ import java.util.List;
 import java.util.Vector;
 
 public class VistaJuego extends View implements SensorEventListener{
+
+    //PUNTUACIONES//////
+    private int puntuacion =0;
+    private Activity padre;
 
     //MULTIMEDIA ///////
     SoundPool soundPool;
@@ -269,6 +276,12 @@ public class VistaJuego extends View implements SensorEventListener{
 
          }
 
+         //Para la puntuación
+         for(Grafico asteroide : asteroides){
+             if(asteroide.verificaColision(nave)){
+                 salir();
+             }
+         }
 
     }
 
@@ -442,8 +455,12 @@ public class VistaJuego extends View implements SensorEventListener{
             asteroides.remove(i);
             //misilActivo = false;
             soundPool.play(idExplosion, 1 ,1 , 0, 0, 1);
+            puntuacion += 1000;
         }
         this.postInvalidate();
+        if(asteroides.isEmpty()){
+            salir();
+        }
     }
     private void activaMisil() {
 
@@ -495,6 +512,20 @@ public class VistaJuego extends View implements SensorEventListener{
     public void desactivarSensores(){
         SensorManager mSensorManager= (SensorManager) this.getContext().getSystemService(Context.SENSOR_SERVICE);
         mSensorManager.unregisterListener(this);
+    }
+
+    public void setPadre(Activity padre){
+        this.padre = padre;
+    }
+
+    //Método para guardar la puntuación al detectar victoria o derrota. (u9 9.2)
+    private void salir(){
+        Bundle bundle = new Bundle();
+        bundle.putInt("puntuacion", puntuacion);
+        Intent intent = new Intent();
+        intent.putExtras(bundle);
+        padre.setResult(Activity.RESULT_OK, intent);
+        padre.finish();
     }
 
 }

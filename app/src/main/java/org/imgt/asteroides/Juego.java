@@ -13,6 +13,10 @@ public class Juego extends Activity {
         setContentView(R.layout.juego);
 
         vistaJuego = (VistaJuego) findViewById(R.id.VistaJuego);
+        //Para la puntuación (9.2)
+        /*Esto Para poder recibir respuesta de VistaJuego, a pesar de que sea una vista y no una
+        actividad*/
+        vistaJuego.setPadre(this);
     }
 
     //Métodos*************************************
