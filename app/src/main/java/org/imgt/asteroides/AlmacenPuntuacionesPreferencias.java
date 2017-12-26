@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 
 import org.imgt.asteroides.AlmacenPuntuaciones;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,7 +32,11 @@ public class AlmacenPuntuacionesPreferencias implements AlmacenPuntuaciones {
             editor.putString("puntuacion" + n,
                     preferencias.getString("puntuacion" + (n - 1), ""));
         }
-        editor.putString("puntuacion0", puntos + " " + nombre);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date fechaFormateada = new Date(fecha);
+
+        editor.putString("puntuacion0", puntos + " " + nombre + " " + sdf.format(fechaFormateada));
         editor.apply();
     }
 

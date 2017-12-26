@@ -7,7 +7,9 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,7 +28,11 @@ public class AlmacenPuntuacionesFicheroInterno implements AlmacenPuntuaciones {
         try {
             FileOutputStream f = context.openFileOutput(FICHERO,
                     Context.MODE_APPEND);
-            String texto = puntos + " " + nombre + "\n";
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date fechaFormateada = new Date(fecha);
+
+            String texto = puntos + " " + nombre +" "+ sdf.format(fechaFormateada)+ "\n";
+            //String texto = puntos + " " + nombre + "\n";
             f.write(texto.getBytes());
             f.close();
         } catch (Exception e) {
