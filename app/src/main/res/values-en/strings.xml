@@ -40,4 +40,6 @@
     <string name="almacenmemexterna">Save to external memory</string>
     <string name="yo">Me</string>
     <string name="puntuacion">Score</string>
+    <string name="error_escritura">Unable to write to external memory</string>
+    <string name="error_lectura">Unable to read from external memory</string>
 </resources>
