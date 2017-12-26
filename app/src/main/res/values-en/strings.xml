@@ -34,11 +34,12 @@
     <string name="tipocontrol">Navigating controls</string>
     <string name="tipocontroldescripcion">How do you want to fly your starship?</string>
     <string name="tipoalmacenamiento">Storage</string>
-    <string name="tipoalmacenamientodescripcion">Select where do you want to save your scores.</string>
-    <string name="almacenpreferencias">Save to User Preferences</string>
-    <string name="almacenmeminterna">Save to internal memory</string>
-    <string name="almacenmemexterna">Save to external memory</string>
-    <string name="almacenrecursos">Save to resources file</string>
+    <string name="tipoalmacenamientodescripcion">Select storage mode for your scores.</string>
+    <string name="almacenpreferencias">User Preferences file</string>
+    <string name="almacenmeminterna">Internal memory</string>
+    <string name="almacenmemexterna">External memory</string>
+    <string name="almacenrecursos">Resources res/raw file (Read only)</string>
+    <string name="almacenassets">Resources assets file (Read only)</string>
     <string name="yo">Me</string>
     <string name="puntuacion">Score</string>
     <string name="error_escritura">Unable to write to external memory</string>
