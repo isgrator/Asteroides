@@ -38,6 +38,7 @@
     <string name="almacenpreferencias">Save to User Preferences</string>
     <string name="almacenmeminterna">Save to internal memory</string>
     <string name="almacenmemexterna">Save to external memory</string>
+    <string name="almacenrecursos">Save to resources file</string>
     <string name="yo">Me</string>
     <string name="puntuacion">Score</string>
     <string name="error_escritura">Unable to write to external memory</string>
