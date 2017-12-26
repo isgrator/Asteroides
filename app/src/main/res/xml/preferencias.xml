@@ -26,6 +26,13 @@
         android:entries="@array/tiposControl"
         android:entryValues="@array/tiposControlValores"
         android:defaultValue="0"/>
+    <ListPreference
+        android:key="almacenamiento"
+        android:title="@string/tipoalmacenamiento"
+        android:summary="@string/tipoalmacenamientodescripcion"
+        android:entries="@array/tiposAlmacenamiento"
+        android:entryValues="@array/tiposAlmacenamientoValores"
+        android:defaultValue="0"/>
     <PreferenceCategory android:title="@string/modomultijugador">
         <CheckBoxPreference
             android:key="multijugador"
