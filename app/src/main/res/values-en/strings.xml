@@ -41,6 +41,7 @@
     <string name="almacenrecursos">Resources res/raw file (Read only)</string>
     <string name="almacenassets">Resources assets file (Read only)</string>
     <string name="almacenxmlsax">XML with SAX</string>
+    <string name="almacenJSON">JSON with GSON</string>
     <string name="yo">Me</string>
     <string name="puntuacion">Score</string>
     <string name="error_escritura">Unable to write to external memory</string>
