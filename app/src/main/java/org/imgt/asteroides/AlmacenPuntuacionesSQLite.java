@@ -44,8 +44,14 @@ public class AlmacenPuntuacionesSQLite extends SQLiteOpenHelper
     public List<String> listaPuntuaciones(int cantidad) {
         List<String> result = new ArrayList<String>();
         SQLiteDatabase db = getReadableDatabase();
+        /* //(pág. 411 9.7)
         Cursor cursor = db.rawQuery("SELECT puntos, nombre, fecha FROM " +
                 "puntuaciones ORDER BY puntos DESC LIMIT " +cantidad, null);
+         */
+        //pág.414 9.7.1)
+        String[] CAMPOS = {"puntos", "nombre" , "fecha"};
+        Cursor cursor = db.query("puntuaciones", CAMPOS, null, null,
+                null, null, "puntos DESC", Integer.toString(cantidad));
         while (cursor.moveToNext()){
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
