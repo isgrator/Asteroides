@@ -5,7 +5,8 @@
     <CheckBoxPreference
         android:key="musica"
         android:title="@string/playmusica"
-        android:summary="@string/playmusicadescripcion"/>
+        android:summary="@string/playmusicadescripcion"
+        android:checked="true"/>
     <ListPreference
         android:key="graficos"
         android:title="@string/tipograficos"
@@ -36,7 +37,8 @@
     <PreferenceCategory android:title="@string/modomultijugador">
         <CheckBoxPreference
             android:key="multijugador"
-            android:title="@string/multijugadoron"/>
+            android:title="@string/multijugadoron"
+            android:checked="false"/>
         <EditTextPreference
             android:key="maxjugadores"
             android:title="@string/maxjugadores"

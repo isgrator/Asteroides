@@ -26,6 +26,7 @@
         <item>@string/almacenrecursos</item>
         <item>@string/almacenassets</item>
         <item>@string/almacenxmlsax</item>
+        <item>@string/almacenGSON</item>
         <item>@string/almacenJSON</item>
     </string-array>
     <string-array name="tiposAlmacenamientoValores">
@@ -36,6 +37,7 @@
         <item>4</item>
         <item>5</item>
         <item>6</item>
+        <item>7</item>
     </string-array>
 
     <string-array name="tipoConexion">
