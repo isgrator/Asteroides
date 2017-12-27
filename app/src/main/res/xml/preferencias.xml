@@ -3,10 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:key="preferencias_principal" >
     <CheckBoxPreference
+        android:checked="true"
         android:key="musica"
-        android:title="@string/playmusica"
+        android:state_checked="true"
         android:summary="@string/playmusicadescripcion"
-        android:checked="true"/>
+        android:title="@string/playmusica" />
     <ListPreference
         android:key="graficos"
         android:title="@string/tipograficos"
