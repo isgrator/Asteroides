@@ -44,6 +44,7 @@
     <string name="almacenGSON">JSON with GSON</string>
     <string name="almacenJSON">JSON with org.json</string>
     <string name="almacenSQLite">SQLite database</string>
+    <string name="almacenSocket">Socket</string>
     <string name="yo">Me</string>
     <string name="puntuacion">Score</string>
     <string name="error_escritura">Unable to write to external memory</string>

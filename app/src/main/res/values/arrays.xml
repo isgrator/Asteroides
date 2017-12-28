@@ -29,6 +29,7 @@
         <item>@string/almacenGSON</item>
         <item>@string/almacenJSON</item>
         <item>@string/almacenSQLite</item>
+        <item>@string/almacenSocket</item>
     </string-array>
     <string-array name="tiposAlmacenamientoValores">
         <item>0</item>
@@ -40,6 +41,7 @@
         <item>6</item>
         <item>7</item>
         <item>8</item>
+        <item>9</item>
     </string-array>
 
     <string-array name="tipoConexion">
