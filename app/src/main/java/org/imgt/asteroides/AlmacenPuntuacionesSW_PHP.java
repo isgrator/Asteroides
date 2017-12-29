@@ -1,5 +1,6 @@
 package org.imgt.asteroides;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -17,13 +18,18 @@ import java.util.List;
 public class AlmacenPuntuacionesSW_PHP implements AlmacenPuntuaciones {
 
     private HttpURLConnection conexion;
+    private String stringUrl;
+
+    public AlmacenPuntuacionesSW_PHP(String url) {
+        this.stringUrl = url;
+    }
 
     public List<String> listaPuntuaciones(int cantidad) {
         List<String> result = new ArrayList<String>();
         try {
             //URL url=new URL("http://158.42.146.127/puntuaciones/lista.php"
-            URL url=new URL("http://imgt4master.x10host.com/puntuaciones/lista.php"
-                    + "?max=20");
+            //URL url=new URL("http://imgt4master.x10host.com/puntuaciones/lista.php"+ "?max=20");
+            URL url = new URL(stringUrl);
             conexion = (HttpURLConnection) url
                     .openConnection();
             if (conexion.getResponseCode() == HttpURLConnection.HTTP_OK) {
@@ -48,7 +54,8 @@ public class AlmacenPuntuacionesSW_PHP implements AlmacenPuntuaciones {
     public void guardarPuntuacion(int puntos, String nombre, long fecha) {
         try {
             //URL url=new URL("http://158.42.146.127/puntuaciones/nueva.php?"
-            URL url=new URL("http://imgt4master.x10host.com/puntuaciones/nueva.php?"
+            //URL url=new URL("http://imgt4master.x10host.com/puntuaciones/nueva.php?"
+            URL url=new URL(stringUrl
                     + "puntos="+ puntos
                     + "&nombre="+ URLEncoder.encode(nombre, "UTF-8")
                     + "&fecha=" + fecha);

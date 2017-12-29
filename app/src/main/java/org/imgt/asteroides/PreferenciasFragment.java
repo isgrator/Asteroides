@@ -14,7 +14,7 @@ public class PreferenciasFragment extends PreferenceFragment {
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferencias);
-        
+        /*
         //código de verificación de valores de preferencias (3.7.4)
 
         final SharedPreferences pref =
@@ -47,5 +47,6 @@ public class PreferenciasFragment extends PreferenceFragment {
                         }
                     }
                 });
+                */
     }
 }

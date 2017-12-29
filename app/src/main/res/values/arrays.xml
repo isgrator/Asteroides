@@ -30,7 +30,8 @@
         <item>@string/almacenJSON</item>
         <item>@string/almacenSQLite</item>
         <item>@string/almacenSocket</item>
-        <item>@string/almacenPHP</item>
+        <item>@string/almacenPHPCursoAndroid</item>
+        <item>@string/almacenPHPIsabel</item>
     </string-array>
     <string-array name="tiposAlmacenamientoValores">
         <item>0</item>
@@ -44,6 +45,7 @@
         <item>8</item>
         <item>9</item>
         <item>10</item>
+        <item>11</item>
     </string-array>
 
     <string-array name="tipoConexion">

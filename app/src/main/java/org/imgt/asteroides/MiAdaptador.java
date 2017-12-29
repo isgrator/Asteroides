@@ -40,7 +40,8 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int i) {
         String[] parts = lista.get(i).split(" ");
-        if(pref.getString("almacenamiento", "0").equals("10")) {
+        if(pref.getString("almacenamiento", "0").equals("10")
+                || pref.getString("almacenamiento", "0").equals("11")) {
             holder.titulo.setText(lista.get(i));
         }else {
             holder.titulo.setText(parts[0] +" "+ parts[1]);

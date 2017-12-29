@@ -45,9 +45,11 @@
     <string name="almacenJSON">JSON with org.json</string>
     <string name="almacenSQLite">SQLite database</string>
     <string name="almacenSocket">Socket</string>
-    <string name="almacenPHP">PHP web service</string>
+    <string name="almacenPHPCursoAndroid">Android course PHP Web Service</string>
+    <string name="almacenPHPIsabel">Isabel\'s PHP Web Service</string>
     <string name="yo">I.Gracián</string>
     <string name="puntuacion">Score</string>
     <string name="error_escritura">Unable to write to external memory</string>
     <string name="error_lectura">Unable to read from external memory</string>
+    <string name="sol_permiso_W_ext">Permission needed to write to external memory</string>
 </resources>
