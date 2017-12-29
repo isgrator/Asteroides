@@ -40,7 +40,6 @@ public class AlmacenPuntuacionesGson implements AlmacenPuntuaciones{
         if (string == null) {
             objeto= new Clase();
         } else {
-
             objeto = gson.fromJson(string, type);
         }
 
@@ -79,7 +78,7 @@ public class AlmacenPuntuacionesGson implements AlmacenPuntuaciones{
     public String leerString(){
         String result;
         SharedPreferences preferencias =context.getSharedPreferences(PREFERENCIAS, Context.MODE_PRIVATE);
-        result = preferencias.getString("puntuacionesGSon","");
+        result = preferencias.getString("puntuacionesGSon",null);
         return result;
     }
 

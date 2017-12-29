@@ -2,6 +2,8 @@ package org.imgt.asteroides;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +20,13 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.ViewHolder> {
     //private Vector<String> lista;
     private List<String> lista;
     protected View.OnClickListener onClickListener;
+    private SharedPreferences pref;
 
     public MiAdaptador(Context context, List<String> lista){ //{public MiAdaptador(Context context, Vector<String> lista) {
         this.lista = lista;
         inflador = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        pref = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     //ViewHolder contiene las vistas que queremos modificar de un elemento
@@ -36,9 +40,12 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int i) {
         String[] parts = lista.get(i).split(" ");
-        holder.titulo.setText(lista.get(i));
-        //holder.titulo.setText(parts[0] +" "+ parts[1]);
-        //holder.subtitutlo.setText(parts[2]);
+        if(pref.getString("almacenamiento", "0").equals("10")) {
+            holder.titulo.setText(lista.get(i));
+        }else {
+            holder.titulo.setText(parts[0] +" "+ parts[1]);
+            holder.subtitutlo.setText(parts[2]);
+        }
         switch (Math.round((float)Math.random()*3)){
             case 0:
                 holder.icon.setImageResource(R.drawable.asteroide1);
