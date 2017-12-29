@@ -29,7 +29,7 @@ public class AlmacenPuntuacionesSW_PHP implements AlmacenPuntuaciones {
         try {
             //URL url=new URL("http://158.42.146.127/puntuaciones/lista.php"
             //URL url=new URL("http://imgt4master.x10host.com/puntuaciones/lista.php"+ "?max=20");
-            URL url = new URL(stringUrl);
+            URL url = new URL(stringUrl+"/lista.php");
             conexion = (HttpURLConnection) url
                     .openConnection();
             if (conexion.getResponseCode() == HttpURLConnection.HTTP_OK) {
@@ -55,7 +55,7 @@ public class AlmacenPuntuacionesSW_PHP implements AlmacenPuntuaciones {
         try {
             //URL url=new URL("http://158.42.146.127/puntuaciones/nueva.php?"
             //URL url=new URL("http://imgt4master.x10host.com/puntuaciones/nueva.php?"
-            URL url=new URL(stringUrl
+            URL url=new URL(stringUrl+"/nueva.php?"
                     + "puntos="+ puntos
                     + "&nombre="+ URLEncoder.encode(nombre, "UTF-8")
                     + "&fecha=" + fecha);
