@@ -21,7 +21,8 @@ public class AlmacenPuntuacionesSW_PHP implements AlmacenPuntuaciones {
     public List<String> listaPuntuaciones(int cantidad) {
         List<String> result = new ArrayList<String>();
         try {
-            URL url=new URL("http://158.42.146.127/puntuaciones/lista.php"
+            //URL url=new URL("http://158.42.146.127/puntuaciones/lista.php"
+            URL url=new URL("http://imgt4master.x10host.com/puntuaciones/lista.php"
                     + "?max=20");
             conexion = (HttpURLConnection) url
                     .openConnection();
@@ -46,7 +47,8 @@ public class AlmacenPuntuacionesSW_PHP implements AlmacenPuntuaciones {
     }
     public void guardarPuntuacion(int puntos, String nombre, long fecha) {
         try {
-            URL url=new URL("http://158.42.146.127/puntuaciones/nueva.php?"
+            //URL url=new URL("http://158.42.146.127/puntuaciones/nueva.php?"
+            URL url=new URL("http://imgt4master.x10host.com/puntuaciones/nueva.php?"
                     + "puntos="+ puntos
                     + "&nombre="+ URLEncoder.encode(nombre, "UTF-8")
                     + "&fecha=" + fecha);
